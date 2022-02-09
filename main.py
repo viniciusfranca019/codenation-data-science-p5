@@ -9,7 +9,7 @@
 
 # ## _Setup_ geral
 
-# In[991]:
+# In[88]:
 
 
 from math import sqrt
@@ -29,7 +29,7 @@ from sklearn.feature_selection import RFE
 from loguru import logger
 
 
-# In[992]:
+# In[89]:
 
 
 # # Algumas configurações para o matplotlib.
@@ -43,13 +43,13 @@ from loguru import logger
 # sns.set()
 
 
-# In[993]:
+# In[90]:
 
 
 fifa = pd.read_csv("fifa.csv")
 
 
-# In[994]:
+# In[91]:
 
 
 columns_to_drop = ["Unnamed: 0", "ID", "Name", "Photo", "Nationality", "Flag",
@@ -72,18 +72,18 @@ fifa = fifa.dropna()
 
 # ## Inicia sua análise a partir daqui
 
-# In[995]:
+# In[92]:
 
 
 # Sua análise começa aqui.
-fifa.columns
+fifa
 
 
 # ## Questão 1
 # 
 # Qual fração da variância consegue ser explicada pelo primeiro componente principal de `fifa`? Responda como um único float (entre 0 e 1) arredondado para três casas decimais.
 
-# In[996]:
+# In[93]:
 
 
 def q1():
@@ -99,7 +99,7 @@ q1()
 # 
 # Quantos componentes principais precisamos para explicar 95% da variância total? Responda como un único escalar inteiro.
 
-# In[997]:
+# In[94]:
 
 
 def q2():
@@ -115,7 +115,7 @@ q2()
 # 
 # Qual são as coordenadas (primeiro e segundo componentes principais) do ponto `x` abaixo? O vetor abaixo já está centralizado. Cuidado para __não__ centralizar o vetor novamente (por exemplo, invocando `PCA.transform()` nele). Responda como uma tupla de float arredondados para três casas decimais.
 
-# In[998]:
+# In[95]:
 
 
 x = [0.87747123,  -1.24990363,  -1.3191255, -36.7341814,
@@ -131,13 +131,13 @@ x = [0.87747123,  -1.24990363,  -1.3191255, -36.7341814,
 ]
 
 
-# In[999]:
+# In[96]:
 
 
 def q3():
-    u = np.array(x)
-    return u.shape
-
+    pca = PCA(n_components=2).fit(fifa)
+    
+    return tuple(np.round(np.dot(pca.components_, np.array(x)), 3))
 q3()
 
 
@@ -145,7 +145,7 @@ q3()
 # 
 # Realiza RFE com estimador de regressão linear para selecionar cinco variáveis, eliminando uma a uma. Quais são as variáveis selecionadas? Responda como uma lista de nomes de variáveis.
 
-# In[1000]:
+# In[97]:
 
 
 def q4():
